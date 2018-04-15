@@ -1,0 +1,39 @@
+#include <stdio.h>
+#include <string.h>
+
+int cmp(char a, char b){//a和b为同一键返回1，不同返回0
+    if(a == b || (a <= 'Z' && a >= 'A' && (a - 'A' + 'a' == b)) || (a <= 'z' && a >= 'a' && (a - 'a' + 'A' == b))){
+        return 1;
+    }else{
+        return 0;
+    }
+}
+
+int main(int argc, const char * argv[]) {
+    int i, j = 0, k = 0, l;
+    char intend[81];//正确的输入
+    char real[81];//实际输入
+    char broken[81];//坏掉的键
+    
+    gets(intend);
+    gets(real);
+    
+    for(i = 0; i < strlen(intend); i++){//遍历正确输入字符串
+        if(intend[i] != real[j]){//实际输入与正确输入不同，说明遇到了坏键
+            for(l = 0; l < k; l++){//遍历已记录的坏键
+                if(cmp(intend[i], broken[l])){//若当前坏键已被记录则l等于该记录在broken数组中的下标
+                    break;
+                }
+            }
+            if(l == k){//当前坏键未被broken记录则将当前坏键存入broken[k]
+                broken[k] = (intend[i] >= 'a' && intend[i] <= 'z') ? intend[i] - 'a' + 'A': intend[i];
+                k++;
+            }
+        }else{//实际输入与正确输入相同则i，j一起自增
+            j++;
+        }
+    }
+    broken[k] = '\0';
+    puts(broken);
+    return 0;
+}

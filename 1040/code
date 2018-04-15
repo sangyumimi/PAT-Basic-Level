@@ -1,0 +1,21 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char input[100001];
+    
+    gets(input);
+    
+    int pat = 0, at = 0, t = 0;
+    
+    for ( int i = strlen(input) - 1; i >= 0; i--) {
+        if (input[i] == 'T')
+            t++;
+        else if (input[i] == 'A')
+            at = (at + t) % 1000000007;
+        else 
+            pat = (pat + at) % 1000000007;
+    }
+    printf("%d", pat);
+    return 0;
+}

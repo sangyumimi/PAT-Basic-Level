@@ -1,0 +1,43 @@
+#include <stdio.h>
+
+//float无法ac，double可以ac
+
+
+typedef struct cake{
+    double storage;
+    double total;
+    double price;
+}ck;
+
+int main(int argc, const char * argv[]) {
+    int n;//月饼种类
+    double d;//市场最大需求量
+    double quan = 0;//贪心算法计算的当前总量
+    double output = 0;//贪心算法计算的当前总利润
+    int i, j, k;//循环控制变量
+    ck tempcake;//用于排序的临时结构体
+    scanf("%i %lf", &n, &d);
+    ck mooncake[n];//n种月饼的信息
+    for(i = 0; i < n; i++){
+        scanf("%lf", &mooncake[i].storage);
+    }
+    for(i = 0; i < n; i++){
+        scanf("%lf", &mooncake[i].total);
+        mooncake[i].price = mooncake[i].total / mooncake[i].storage;
+        for(j = 0; j < i; j++){//按price降序进行插入排序
+            if(mooncake[i].price > mooncake[j].price){
+                tempcake = mooncake[i];
+                for(k = i; k > j; k--){
+                    mooncake[k] = mooncake[k - 1];
+                }
+                mooncake[j] = tempcake;
+            }
+        }
+    }
+    for(i = 0; quan < d; i++){//贪心计算最大的总利润
+        quan += mooncake[i].storage;
+        output += mooncake[i].total;
+    }
+    printf("%.2f", output - mooncake[i - 1].price * (quan - d));//将多加的部分利润减去
+    return 0;
+}

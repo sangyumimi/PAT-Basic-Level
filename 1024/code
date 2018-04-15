@@ -1,0 +1,60 @@
+#include <stdio.h>
+#include <string.h>
+
+int main(int argc, const char * argv[]) {
+    char a[10009];
+    int i;
+    int loc = 0;//E的位置
+    int e = 0;//指数的绝对值
+    unsigned long len;//字符串长度
+    gets(a);
+    if(a[0] == '-')
+        printf("-");
+    while(a[loc] != 'E'){
+        loc++;
+    }
+    len = strlen(a);
+    for(i = loc + 2; i < len; i++){
+        e = e * 10 + a[i] - '0';
+    }
+    if(!e){//指数为0直接输出尾数
+        for(i = 1; i < loc; i++){
+            printf("%c", a[i]);
+        }
+    }
+    switch (a[loc + 1]) {
+        case '-':
+            printf("0.");
+            for(i = e; i > 1; i--){
+                printf("0");
+            }
+            printf("%c", a[1]);
+            for(i = 3; i < loc; i++){
+                printf("%c", a[i]);
+            }
+            break;
+        case '+':
+            if(e >= loc - 3){//指数较大需要在低位补0，不输出小数点
+                printf("%c", a[1]);
+                for(i = 3; i < loc; i++){
+                    printf("%c", a[i]);
+                }
+                for(i = 0; i < e - loc + 3; i++){
+                    printf("0");
+                }
+            }else{//指数较小需要输出小数点
+                printf("%c", a[1]);
+                for(i = 3; i < e + 3; i++){
+                    printf("%c", a[i]);
+                }
+                printf(".");
+                for(i = e + 3; i < loc; i++){
+                    printf("%c", a[i]);
+                }
+            }
+            break;
+        default:
+            break;
+    }
+    return 0;
+}

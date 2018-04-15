@@ -1,0 +1,15 @@
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+    int pa, pb, pc, aa, ab, ac;
+    
+    scanf("%d.%d.%d %d.%d.%d", &pa, &pb, &pc, &aa, &ab, &ac);
+    
+    int p = pa * 17 * 29 + pb * 29 + pc;//换算成knut
+    int a = aa * 17 * 29 + ab * 29 + ac;
+    
+    int output = a - p;
+    printf("%d.%d.%d\n", output / (17 * 29), abs(output % (17 * 29) / 29), abs(output % 29));
+    return 0;
+}

@@ -1,0 +1,89 @@
+#include <stdio.h>
+
+typedef struct rank{
+    int id;
+    int mo;
+    int ab;
+    int total;
+    int class;
+}rk;
+
+void sort(rk *n, int start, int end){
+    rk temp;
+    int i;
+    int j;
+    for(i = start; i < end - 1; i++){
+        for(j = start; j < end - 1; j++){
+            if(n[j].total < n[j + 1].total){
+                temp = n[j];
+                n[j] = n[j + 1];
+                n[j + 1] = temp;
+            }else if(n[j].total == n[j + 1].total){
+                if(n[j].mo < n[j + 1].mo){
+                    temp = n[j];
+                    n[j] = n[j + 1];
+                    n[j + 1] = temp;
+                }else if(n[j].mo == n[j + 1].mo){
+                    if(n[j].id > n[j + 1].id){
+                        temp = n[j];
+                        n[j] = n[j + 1];
+                        n[j + 1] = temp;
+                    }
+                }
+            }
+        }
+    }
+}
+
+int main(int argc, const char * argv[]) {
+    int i;
+    int j;
+    rk temp;
+    int c1 = 0, c2 = 0,c3 = 0, c4 = 0;
+    int n;
+    int m = 0;
+    int l;
+    int h;
+    scanf("%i %i %i", &n, &l, &h);
+    rk table[n];
+    for(i = 0; i < n; i++){
+        scanf("%i %i %i", &table[i].id, &table[i].mo, &table[i].ab);
+        table[i].total = table[i].mo + table[i].ab;
+        if(table[i].mo >= l && table[i].ab >= l){
+            m++;
+            if(table[i].mo >= h &&table[i].ab >= h){
+                table[i].class = 1;
+                c1++;
+            }else if(table[i].mo >= h && table[i].ab < h){
+                table[i].class = 2;
+                c2++;
+            }else if(table[i].mo >= table[i].ab){
+                table[i].class = 3;
+                c3++;
+            }else{
+                table[i].class = 4;
+                c4++;
+            }
+        }else{
+            table[i].class = 5;
+        }
+    }
+    for(i = 0; i < n - 1; i++){
+        for(j = 0; j < n - 1; j++){
+            if(table[j].class > table[j + 1].class){
+                temp = table[j];
+                table[j] = table[j + 1];
+                table[j + 1] = temp;
+            }
+        }
+    }
+    sort(table, 0, c1);
+    sort(table, c1, c1 + c2);
+    sort(table, c1 + c2, c1 + c2 + c3);
+    sort(table, c1 + c2 + c3, c1 + c2 + c3 + c4);
+    printf("%i\n", m);
+    for(i = 0; i < m; i++){
+        printf("%i %i %i\n",table[i].id, table[i].mo, table[i].ab);
+    }
+    return 0;
+}

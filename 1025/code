@@ -1,0 +1,74 @@
+//
+//  main.c
+//  pat
+//
+//  Created by sangyumimi on 2016/12/28.
+//  Copyright © 2016年 sangyumimi. All rights reserved.
+//
+
+#include <stdio.h>
+
+typedef struct node{
+    int addr;
+    int data;
+    int next;
+}nd;
+
+void swap(nd *a, nd *b){
+    nd temp;
+    temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void nodeswap(nd *a, int start, int num){
+    int i = start + num -1;
+    int j = start;
+    for(; i > j; i--, j++){
+        swap(&a[i], &a[j]);
+    }
+}
+
+int main(int argc, const char * argv[]) {
+    int i, j = 0;
+    int head, n, k;//起始地址，结点总数，要求反转的子链结点的个数
+    scanf("%d %d %d", &head, &n, &k);
+    nd node[n];
+    
+    for(i = 0; i < n; i++){
+        scanf("%d %d %d", &node[i].addr, &node[i].data, &node[i].next);
+    }
+    
+    while (node[j].addr != head) {//找到起始结点
+        j++;
+    }
+    swap(&node[0], &node[j]);//与第0个结点交换
+    
+    for(i = 0; node[i].next != -1; i++){//有效结点排序
+        for(j = i + 1; j < n; j++){
+            if(node[j].addr == node[i].next)
+                break;
+        }
+        swap(&node[i + 1], &node[j]);
+    }
+    
+    n = i + 1;//n为有效输入的结点个数
+    
+    for(i = 0; i + k <= n; i += k){//每k个结点反转
+        nodeswap(node, i, k);
+    }
+    
+    for(i = 0; i < n - 1; i++){//修改每个结点的next为下一结点的addr
+        node[i].next = node[i + 1].addr;
+    }
+    
+    node[i].next = -1;//链尾结点next指向null（-1）
+    
+    for(i = 0; i < n - 1; i++){//除链尾结点外addr、next输出时高位补0
+        printf("%05d %d %05d\n",node[i].addr, node[i].data, node[i].next);
+    }
+    
+    printf("%05d %d %d\n", node[i].addr, node[i].data, node[i].next);//链尾结点next为-1且高位不补0
+    
+    return 0;
+}

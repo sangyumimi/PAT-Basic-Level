@@ -1,0 +1,21 @@
+#include <stdio.h>
+
+int main(int argc, const char * argv[]) {
+    int a[10];
+    int flag = 0;
+    int i, j;
+    for(i = 0; i < 10; i++){
+        scanf("%i", &a[i]);
+        if(!flag && a[i] && i){
+            flag = i;
+        }
+    }
+    printf("%i", flag);
+    a[flag]--;
+    for(i = 0; i < 10; i++){
+        for(j = 0; j < a[i]; j++){
+            printf("%i", i);
+        }
+    }
+    return 0;
+}

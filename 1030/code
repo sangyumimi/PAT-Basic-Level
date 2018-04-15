@@ -1,0 +1,40 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int cmp ( const void *a , const void *b){
+    return *(int *)a - *(int *)b;
+}
+
+int main(int argc, const char * argv[]) {
+    int i;
+    long long l, r, mid = 0;
+    long long n, p;
+    long long output = 1;
+    scanf("%lld %lld", &n, &p);
+    long long input[n];
+    for (i = 0; i < n; i++){
+        scanf("%lld", &input[i]);
+    }
+    
+    qsort(input, n, sizeof(input[0]),cmp);
+    
+    for(i = 0; i < n; i++){
+        if(input[n -1] < input[i] * p){
+            l = n;
+        }else{//二分查找input中第一个大于input[i] * p的元素的下标
+            l = i + 1;
+            r = n - 1;
+            while(l < r){
+                mid = (l + r) / 2;
+                if(input[mid] > input[i] * p){
+                    r = mid;
+                }else if(input[mid] <= input[i] * p){
+                    l = mid + 1;
+                }
+            }
+        }
+        output = (l - i > output)? l - i: output;
+    }
+    printf("%lld\n", output);
+    return 0;
+}

@@ -1,0 +1,28 @@
+#include <stdio.h>
+
+long long gcd(long long a, long long b){
+    return (b == 0)? a: gcd(b, a % b);
+}
+
+int main(int argc, const char * argv[]) {
+    int i;
+    double n1, m1, n2, m2;
+    double k;
+    double min, max;
+    scanf("%lf/%lf %lf/%lf %lf", &n1, &m1, &n2, &m2, &k);
+    min = (n1 / m1 * k < n2 / m2 * k)? n1 / m1 * k: n2 / m2 * k;
+    max = (n1 / m1 * k > n2 / m2 * k)? n1 / m1 * k: n2 / m2 * k;
+    int flag = 1;
+    for(i = 1; i <= k; i++){
+        if(min < i && max > i && gcd(k, i) == 1){
+            if(flag){
+                flag = 0;
+                printf("%d/%.0f", i, k);
+            }else{
+                printf(" %d/%.0f", i, k);
+            }
+        }
+    }
+    printf("\n");
+    return 0;
+}

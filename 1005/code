@@ -1,0 +1,66 @@
+#include <stdio.h>
+#include <string.h>
+
+void delete(int n, int *p, int *lenth){//在长度为*lenth的数列p中删去元素n
+    int j;
+    int flag = 0;
+    for(j = 0; j < *lenth; j++){
+        if (p[j] == n){
+            flag = 1;
+            break;
+        }
+    }
+    if (flag){
+        *lenth = *lenth - 1;
+        for(; j < *lenth; j++){
+            p[j] = p[j+1];
+        }
+    }
+}
+
+void sort(int *n, int lenth){//长度为lenth的数组n降序排列
+    int i, j;
+    int temp;
+    int max;
+    int f = 0;
+    for(j = 0; j < lenth; j++){
+        max = n[j];
+        f = j;//漏写这句无法ac
+        for(i = j; i < lenth; i++){
+            if(max < n[i]){
+                max = n[i];
+                f = i;
+            }
+        }
+        temp = n[f];
+        n[f] = n[j];
+        n[j] = temp;
+    }
+}
+
+int main(int argc, const char * argv[]) {
+    int num;
+    int i, j;
+    int n;
+    int input[100];
+    int output[100];
+    scanf("%i", &num);
+    j = num;
+    for(i = 0; i < num; i++){
+        scanf("%i", &input[i]);
+        output[i] = input[i];
+    }
+    for(i = 0; i < num; i++){
+        n = input[i];
+        while(n != 1){
+            n = (n % 2 == 0)? n / 2: (3 * n + 1) / 2;//n为过程中生成的中间元素
+            delete(n, output, &j);//删除ouput中的n
+        }
+    }
+    sort(output, j);
+    for(i = 0; i < j - 1; i++){
+        printf("%i ", output[i]);
+    }
+    printf("%i\n", output[i]);
+    return 0;
+}

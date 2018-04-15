@@ -1,0 +1,34 @@
+#include <stdio.h>
+typedef struct student{
+    long int num;                   //用int会导致num输入时出错？？？？
+    int test;
+    int seat;
+}stu;
+
+int main(int argc, const char * argv[]) {
+    int n;
+    int m;
+    int i;
+    int j;
+    scanf("%i", &n);
+    stu stu[n];
+    for(i = 0; i < n; i++){
+        scanf("%li %i %i", &stu[i].num, &stu[i].test, &stu[i].seat);
+    }
+    scanf("%i", &m);
+    int temp[m];
+    int check;
+    for(i = 0; i < m; i++){
+        scanf("%i", &check);
+        for(j = 0; j < n; j++){
+            if(stu[j].test == check){
+                temp[i] = j;
+                break;
+            }
+        }
+    }
+    for(i = 0; i < m; i++){
+        printf("%li %i\n", stu[temp[i]].num, stu[temp[i]].seat);
+    }
+    return 0;
+}

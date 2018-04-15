@@ -1,0 +1,18 @@
+#include <stdio.h>
+
+int main() {
+    double temp;//记录数组元素值
+    double output = 0;//输出的和
+    
+    int n;//数列中元素个数
+    scanf("%d", &n);
+    
+    for (int i = 0; i < n; i++) {
+        scanf("%lf", &temp);
+        output += temp * (i + 1) * (n - i);//不能写成output += (i + 1) * (n - i) * temp；否则会先算(i + 1) * (n - i)导致int溢出
+    }
+    
+    printf("%.2f", output);
+    
+    return 0;
+}

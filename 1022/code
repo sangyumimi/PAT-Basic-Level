@@ -1,0 +1,21 @@
+#include <stdio.h>
+#include <math.h>
+
+int main(int argc, const char * argv[]) {
+    int a, b, d;
+    int output[31];
+    int i;
+    scanf("%i %i %i", &a, &b, &d);
+    int c = a + b;
+    if(!c){
+        printf("0");
+    }
+    for(i = 0; c != 0; i++){
+        output[i] = c % d;
+        c = c / d;
+    }
+    for(; i > 0;i--){
+        printf("%i", output[i - 1]);
+    }
+    return 0;
+}

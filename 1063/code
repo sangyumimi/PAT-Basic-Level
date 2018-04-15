@@ -1,0 +1,17 @@
+#include <stdio.h>
+#include <math.h>
+
+int main(int argc, const char * argv[]) {
+    int i;
+    int n;
+    double max = 0;
+    int a, b;
+    scanf("%d", &n);
+    for (i = 0; i < n; i++) {
+        scanf("%d %d", &a, &b);
+        max = (max > a * a + b * b)? max: a * a + b * b;
+    }
+    printf("%.2f", sqrt(max));
+    printf("\n");
+    return 0;
+}

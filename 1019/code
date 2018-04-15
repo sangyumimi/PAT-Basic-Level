@@ -1,0 +1,54 @@
+#include <stdio.h>
+
+int getbig(int n){
+    int temp[4];//存放各位数字
+    int tem;//用于交换的临时变量
+    int i, j;//计数变量
+    for(i = 0; i < 4; i++){//取出各位数字低位存储在temp数组中
+        temp[i] = n % 10;
+        n /= 10;
+    }
+    for(i = 0; i < 3; i++){//冒泡排序
+        for(j = 0; j < 3 - i; j++){
+            if(temp[j] > temp[j + 1]){
+                tem = temp[j];
+                temp[j] = temp[j + 1];
+                temp[j + 1] = tem;
+            }
+        }
+    }
+    return temp[0] + temp[1] * 10 + temp[2] * 100 + temp[3] * 1000;
+}
+int getsmall(int n){
+    int temp[4];
+    int tem;
+    int i;
+    int j;
+    for(i = 0; i < 4; i++){
+        temp[i] = n % 10;
+        n /= 10;
+    }
+    for(i = 0; i < 3; i++){
+        for(j = 0; j < 3 - i; j++){
+            if(temp[j] > temp[j + 1]){
+                tem = temp[j];
+                temp[j] = temp[j + 1];
+                temp[j + 1] = tem;
+            }
+        }
+    }
+    return temp[0] * 1000 + temp[1] * 100 + temp[2] * 10 + temp[3];
+}
+
+
+int main(int argc, const char * argv[]) {
+    int input;
+    scanf("%i", &input);
+    if(!(getbig(input) - getsmall(input))){//各位数字相同时输出“N - N = 0000”
+        printf("%04i - %04i = 0000\n", input, input);
+    }else do{//当input等于6174时跳出循环（先do再判断）
+        printf("%04i - %04i = %04i\n", getbig(input), getsmall(input), getbig(input) - getsmall(input));
+        input = getbig(input) - getsmall(input);
+    }while(input != 6174);
+    return 0;
+}

@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <math.h>
+
+int vegetable(int n){//素数返回1，合数返回0
+    int i;
+    if(n == 2)
+        return 1;
+    if(n == 1)
+        return 0;
+    for(i = 2; i < sqrt(n) + 1; i++){
+        if(! (n % i)){
+            return 0;
+        }
+    }
+    return 1;
+}
+
+int main(int argc, const char * argv[]) {
+    int m ,n;
+    scanf("%i %i",&m, &n);
+    int i = 3;
+    int j;
+    int temp[10000];
+    temp[0] = 2;
+    for(j = 1; j < 10000; j++){
+        while(!vegetable(i)){
+            i += 2;
+        }
+        temp[j] = i;
+        i += 2;
+    }
+    for(j = m - 1; j < n - 1; j++){
+        if(j % 10 == (m + 8) % 10){
+            printf("%i\n", temp[j]);
+        }else{
+            printf("%i ", temp[j]);
+        }
+    }
+    printf("%i", temp[n - 1]);
+    return 0;
+}

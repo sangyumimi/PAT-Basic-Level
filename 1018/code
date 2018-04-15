@@ -1,0 +1,80 @@
+#include <stdio.h>
+
+int main(int argc, const char * argv[]) {
+    int i = 0;
+    int n;//局数
+    char a, b;//甲、乙的手势
+    int temp;//为了得到outputa和outputb而设置的中间值
+    char outputa, outputb;//甲、乙赢得最多的手势
+    int win = 0;//甲赢的次数=乙输的次数
+    int draw = 0;//平局的次数
+    int lose = 0;//乙赢的次数=甲输的次数
+    int win1[3] = {0}, win2[3] = {0};//[0][1][2]分别表示b,c,j赢的次数，win1为甲，win2为乙
+    scanf("%i", &n);
+    for(i = 0; i < n; i++){
+        getchar();
+        scanf("%c", &a);
+        getchar();
+        scanf("%c", &b);
+        switch (a) {
+            case 'B':
+                switch (b) {
+                    case 'B':
+                        draw++;
+                        break;
+                    case 'C':
+                        win1[0]++;
+                        break;
+                    case 'J':
+                        win2[2]++;
+                    default:
+                        break;
+                }
+                break;
+            case 'C':
+                switch (b) {
+                    case 'B':
+                        win2[0]++;
+                        break;
+                    case 'C':
+                        draw++;
+                        break;
+                    case 'J':
+                        win1[1]++;
+                    default:
+                        break;
+                }
+                break;
+            case 'J':
+                switch (b) {
+                    case 'B':
+                        win1[2]++;
+                        break;
+                    case 'C':
+                        win2[1]++;
+                        break;
+                    case 'J':
+                        draw++;
+                    default:
+                        break;
+                }
+                break;
+            default:
+                break;
+        }
+    }
+    win = win1[0] + win1[1] + win1[2];
+    lose = win2[0] + win2[1] + win2[2];
+    printf("%i %i %i\n%i %i %i\n", win, draw, lose, lose, draw, win);
+    
+    temp = (win1[2] > win1[1]) ? win1[2]: win1[1];
+    outputa = (win1[2] > win1[1]) ? 'J': 'C';
+    outputa = (temp > win1[0]) ? outputa: 'B';//甲赢的最多的手势赋给outputa
+    
+    temp = (win2[2] > win2[1]) ? win2[2]: win2[1];
+    outputb = (win2[2] > win2[1]) ? 'J': 'C';
+    outputb = (temp > win2[0]) ? outputb: 'B';//乙赢的最多的手势赋给outputb
+    
+    printf("%c %c\n", outputa, outputb);
+    return 0;
+}

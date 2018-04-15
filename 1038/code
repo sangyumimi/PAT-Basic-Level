@@ -1,0 +1,28 @@
+#include <stdio.h>
+
+int main() {
+    int i;
+    int temp;
+    
+    int table[100] = {0};//记录每个成绩的学生人数
+    
+    int total;
+    scanf("%d", &total);
+    
+    for (i = 0; i < total; i++) {
+        scanf("%d", &temp);
+        table[temp]++;
+    }
+    
+    int inquire;
+    scanf("%d", &inquire);
+    
+    for (i = 0; i < inquire; i++) {
+        scanf("%d", &temp);
+        printf("%d", table[temp]);
+        if (i != inquire -1) {
+            printf(" ");
+        }
+    }
+    return 0;
+}
